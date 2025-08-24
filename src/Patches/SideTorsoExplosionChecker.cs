@@ -2,7 +2,7 @@
 
 namespace SurvivableArms
 {
-    class SideTorsoExplosionChecker
+    internal class SideTorsoExplosionChecker
     {
         [HarmonyPatch(typeof(Mech), "DamageLocation")]
         public static class Mech_DamageLocation_Patch
