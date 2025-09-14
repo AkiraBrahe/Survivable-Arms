@@ -1,6 +1,6 @@
 ﻿using BattleTech;
 
-namespace SurvivableArms
+namespace SurvivableArms.Patches
 {
     internal class SideTorsoExplosionChecker
     {

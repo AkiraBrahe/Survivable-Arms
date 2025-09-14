@@ -1,6 +1,6 @@
 ﻿using BattleTech;
 
-namespace SurvivableArms
+namespace SurvivableArms.Patches
 {
     internal class ArmNukeChecker
     {
@@ -13,6 +13,7 @@ namespace SurvivableArms
                 if (damageLevel != ComponentDamageLevel.Destroyed) return;
                 var mountedLocation = __instance.mechComponentRef?.MountedLocation;
 
+                // If an arm is being nuked, ensure it survived side torso destruction.
                 if ((Holder.LeftArmSurvived && mountedLocation == ChassisLocations.LeftArm) ||
                     (Holder.RightArmSurvived && mountedLocation == ChassisLocations.RightArm))
                 {
