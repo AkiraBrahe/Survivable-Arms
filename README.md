@@ -1,16 +1,11 @@
-# Survivable-Arms
-Prevents arm mech components from being completely destroyed if you only destroyed the side torso of a mech.
+# Survivable Arms
 
-# Installation instructions
+BattleTech mod that allows 'Mech arm components to survive battle damage when the side torso is destroyed.
 
+## Installation
 
-Place the mod folder inside the game's mod folder:
+> [!CAUTION]  
+> Requires ModTek v3 or higher. This is a HarmonyX version of RealityMachina's original [Survivable Arms](https://github.com/RealityMachina/Survivable-Arms) mod.
 
-WIN: C:\Users\user_name\MyDocuments\MyGames\BattleTech\mods
-LIN: /home/user_name/MyGames/BattleTech/mods
-OSX: /Users/user_name/MyGames/BattleTech/mods
-
-If the above folder doesn't exist, you need to start Battletech to have it create the folder.
-
-If you get a message about needing to overwrite the folder, click yes: either you're updating the mod (in which case you should be replacing it),
-or you're installing another mod from me, in which case your OS should be smart enough to merge the conflicting folders.
+1.  Download the [latest release](https://github.com/AkiraBrahe/Survivable-Arms/releases/latest) of the mod from the release page.
+2.  Copy the mod folder inside the downloaded ZIP file directly into your `BattleTech\Mods` folder.
