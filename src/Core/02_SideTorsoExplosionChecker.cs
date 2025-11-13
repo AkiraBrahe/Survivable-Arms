@@ -1,19 +1,21 @@
 ﻿using BattleTech;
 
-namespace SurvivableArms.Patches
+namespace SurvivableArms.Core
 {
     internal class SideTorsoExplosionChecker
     {
+        /// <summary>
+        /// Tracks damage to determine if arms survive side torso destruction.
+        /// </summary>
         [HarmonyPatch(typeof(Mech), "DamageLocation")]
-        public static class Mech_DamageLocation_Patch
+        public static class Mech_DamageLocation
         {
             [HarmonyPrefix]
             public static void Prefix(Mech __instance, ArmorLocation aLoc, float totalArmorDamage, float directStructureDamage)
             {
-                if (aLoc is ArmorLocation.None or ArmorLocation.Invalid)
-                    return;
+                if (aLoc is ArmorLocation.None or ArmorLocation.Invalid) return;
 
-                ChassisLocations cLoc = MechStructureRules.GetChassisLocationFromArmorLocation(aLoc);
+                var cLoc = MechStructureRules.GetChassisLocationFromArmorLocation(aLoc);
                 float currentStructure = __instance.GetCurrentStructure(cLoc);
 
                 // If location is already destroyed, nothing to do.
@@ -33,7 +35,7 @@ namespace SurvivableArms.Patches
                     else if (cLoc == ChassisLocations.RightArm)
                         Holder.RightArmSurvived = false;
 
-                    ChassisLocations dependentLocation = MechStructureRules.GetDependentLocation(cLoc);
+                    var dependentLocation = MechStructureRules.GetDependentLocation(cLoc);
                     if (dependentLocation != ChassisLocations.None && !__instance.IsLocationDestroyed(dependentLocation))
                     {
                         // Side torso was destroyed, no reason the arm should be totally trashed.

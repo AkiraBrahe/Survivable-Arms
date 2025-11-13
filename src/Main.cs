@@ -18,7 +18,6 @@ namespace SurvivableArms
             {
                 harmony = new Harmony("Battletech.realitymachina.SurvivableArms");
                 harmony.PatchAll(Assembly.GetExecutingAssembly());
-                Log.Log("Mod initialized!");
             }
             catch (Exception ex)
             {
