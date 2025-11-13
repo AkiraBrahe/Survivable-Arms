@@ -1,7 +1,7 @@
 {
     "Name": "Survivable Arms",
     "Enabled": true,
-    "Version": "1.0.1-HarmonyX",
+    "Version": "1.0.2-HarmonyX",
 
     "Description": "Allows items on 'Mech arms to survive battle damage when it's possible.",
     "Author": "RealityMachina",
