@@ -1,11 +1,14 @@
 ﻿using BattleTech;
 
-namespace SurvivableArms.Patches
+namespace SurvivableArms.Core
 {
     internal class SideTorsoExplosionChecker
     {
+        /// <summary>
+        /// Tracks damage to determine if arms survive side torso destruction.
+        /// </summary>
         [HarmonyPatch(typeof(Mech), "DamageLocation")]
-        public static class Mech_DamageLocation_Patch
+        public static class Mech_DamageLocation
         {
             [HarmonyPrefix]
             public static void Prefix(Mech __instance, ArmorLocation aLoc, float totalArmorDamage, float directStructureDamage)
@@ -13,7 +16,7 @@ namespace SurvivableArms.Patches
                 if (aLoc is ArmorLocation.None or ArmorLocation.Invalid)
                     return;
 
-                ChassisLocations cLoc = MechStructureRules.GetChassisLocationFromArmorLocation(aLoc);
+                var cLoc = MechStructureRules.GetChassisLocationFromArmorLocation(aLoc);
                 float currentStructure = __instance.GetCurrentStructure(cLoc);
 
                 // If location is already destroyed, nothing to do.
@@ -27,20 +30,22 @@ namespace SurvivableArms.Patches
                 // If the damage is enough to destroy the location, we need to check if the arms survived.
                 if (effectiveDamage > 0f && currentStructure <= effectiveDamage)
                 {
+                    var state = Holder.GetOrCreateState(__instance.GUID);
+
                     // Invalidate if the actual arm was destroyed.
                     if (cLoc == ChassisLocations.LeftArm)
-                        Holder.LeftArmSurvived = false;
+                        state.LeftArmSurvived = false;
                     else if (cLoc == ChassisLocations.RightArm)
-                        Holder.RightArmSurvived = false;
+                        state.RightArmSurvived = false;
 
-                    ChassisLocations dependentLocation = MechStructureRules.GetDependentLocation(cLoc);
+                    var dependentLocation = MechStructureRules.GetDependentLocation(cLoc);
                     if (dependentLocation != ChassisLocations.None && !__instance.IsLocationDestroyed(dependentLocation))
                     {
                         // Side torso was destroyed, no reason the arm should be totally trashed.
                         if (dependentLocation == ChassisLocations.LeftArm)
-                            Holder.LeftArmSurvived = true;
+                            state.LeftArmSurvived = true;
                         else if (dependentLocation == ChassisLocations.RightArm)
-                            Holder.RightArmSurvived = true;
+                            state.RightArmSurvived = true;
                     }
                 }
             }
